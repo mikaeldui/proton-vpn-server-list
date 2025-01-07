@@ -27,9 +27,10 @@ $(document).ready( function () {
             ])
         });
 
+        // Guess Exit IPv6 Addresses
         var hasIpv6 = data.filter(l => l[4] != "" );
 
-        hasIpv6.sort((a, b) => a[1].split("#")[1].localeCompare(b[1].split("#")[1]));
+        hasIpv6.sort((a, b) => Number(a[1].split("#")[1]) -Number(b[1].split("#")[1]));
 
         Object.entries(Object.groupBy(hasIpv6, d => d[0])).forEach(
             ([_, node]) =>  {
