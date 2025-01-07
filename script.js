@@ -28,7 +28,13 @@ $(document).ready( function () {
         });
 
         var hasIpv6 = data.filter(l => l[4] != "" );
-        hasIpv6.sort((a, b) => a[1].localeCompare(b[1]));
+        const makeIpNumber = (ip) => Number(
+            ip.split('.')
+              .map((subString) => (`00${subString}`).slice(-3))
+              .join('')
+          );
+
+        hasIpv6.sort((a, b) => makeIpNumber(a[3]) - makeIpNumber(b[3]));
 
         Object.entries(Object.groupBy(hasIpv6, d => d[0])).forEach(
             ([_, node]) =>  {
