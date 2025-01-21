@@ -3,12 +3,14 @@ $(document).ready( function () {
 
     async function myFunction() {
 
-        var logRes = await fetch("logicals.json");
+        const MSG_UNKNOWN_IPV6 = ":: (Yes, but unknown)";
+
+        var logRes = await fetch("logicals.json?2025-01-21");
         var logJson = await logRes.json();
 
         const logicals = logJson.LogicalServers;
-        const nodesIpv6 = await (await fetch("nodes-ipv6.json")).json();
-        var ipinfoResp = await fetch("ipinfo.csv");
+        const nodesIpv6 = await (await fetch("nodes-ipv6.json?2025-01-21")).json();
+        var ipinfoResp = await fetch("ipinfo.csv?2025-01-21");
         var ipinfoText = await ipinfoResp.text();
         const ipinfo = $.csv.toObjects(ipinfoText);
 
@@ -21,14 +23,14 @@ $(document).ready( function () {
                 logical.Name,
                 logical.Servers[0].EntryIP,
                 logical.Servers[0].ExitIP,
-                nodesIpv6[logical.Domain] || "", // Entry IPv6
+                nodesIpv6[logical.Domain] || (!!(16 & logical.Features) ? MSG_UNKNOWN_IPV6 : ""), // Entry IPv6
                 "", // Exit IPv6
                 isp ? isp.org : ""
             ])
         });
 
         // Guess Exit IPv6 Addresses
-        var hasIpv6 = data.filter(l => l[4] != "" );
+        var hasIpv6 = data.filter(l => l[4] != "" && l[4] != MSG_UNKNOWN_IPV6);
 
         hasIpv6.sort((a, b) => Number(a[1].split("#")[1]) -Number(b[1].split("#")[1]));
 
