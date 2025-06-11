@@ -5,12 +5,12 @@ $(document).ready( function () {
 
         const MSG_UNKNOWN_IPV6 = ":: (Yes, but unknown)";
 
-        var logRes = await fetch("logicals.json?2025-01-21");
+        var logRes = await fetch("logicals.json?2025-06-11");
         var logJson = await logRes.json();
 
         const logicals = logJson.LogicalServers;
-        const nodesIpv6 = await (await fetch("nodes-ipv6.json?2025-01-21")).json();
-        var ipinfoResp = await fetch("ipinfo.csv?2025-01-21");
+        const nodesIpv6 = await (await fetch("nodes-ipv6.json?2025-06-11")).json();
+        var ipinfoResp = await fetch("ipinfo.csv?2025-06-11");
         var ipinfoText = await ipinfoResp.text();
         const ipinfo = $.csv.toObjects(ipinfoText);
 
