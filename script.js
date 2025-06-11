@@ -23,7 +23,8 @@ $(document).ready( function () {
                 logical.Name,
                 logical.Servers[0].EntryIP,
                 nodesIpv6[logical.Domain] || (!!(16 & logical.Features) ? MSG_UNKNOWN_IPV6 : ""), // Entry IPv6
-                isp ? isp.org : ""
+                isp ? isp.org : "",
+                isp ? isp.city + ", " + isp.region : ""
             ])
         });
 
